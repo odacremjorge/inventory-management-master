@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+
+{% block title %} About {% endblock title %}
+
+
+{% block content %}
+    
+    {% if not user.is_authenticated  %}
+        <br>
+        <a href="{% url 'home' %}" class="btn ghost-button">Volver Atras</a>
+    {% endif %}    
+    
+    <div class="align-middle" style="color: #829abd; font-style: bold; font-size: 3rem;">Almacen - Oruro</div>
+    <div class="align-middle" style="color: #fff">Un sistema de gestión de inventario</div>
+    <br><br>
+
+    <div class="align-middle"> 
+        <h2 style="color:#829abd">| Acerca de Nosotros |</h3> <br>
+            <p>
+                Almacen de Oruro aplica este software de gestión de inventario simple, creado para los requisitos de la empresa ENDE Servicios y Construcciones S.A. en su Regional Oruro.
+                El software es capaz de realizar un seguimiento de las existencias de repuestos entrantes y salientes con un comprobante renderizado dinámicamente.
+                A cada proveedor se le proporciona un perfil donde puede ver el historial de sus transacciones con la empresa.
+            </p>
+        <br>
+    </div>
+        <h2 style="color:#829abd" class="align-middle">| Caracteristicas |</h3> <br>
+            <ul style="display:table; margin:0 auto;">                
+                <li>Interfaz interactivo para mostrar el stock disponible actual</li>
+                <li>Se mantienen los detalles de stock, como el stock disponible actual</li>
+                <li>Los repuestos entrantes se realizan a través de compras o por envio de la central en La Paz.</li>
+                <li>Los repuestos salientes se realizan a través de salidas.</li>
+                <li>Cada transacción realizada a través del software se registra</li>
+                <li>El comprobante de salida se renderiza dinámicamente y se puede imprimir</li>
+                <li>Se mantienen perfiles separados para los proveedores</li>
+            </ul>  
+        <br>
+    <div class="align-middle">
+        <h2 style="color:#829abd" >| Desarrollador |</h3> <br>
+            <a target="_blank" href="#" >JAMA J&N MSMM-2021</a>
+            <br><br><br>
+    </div>
+
+{% endblock content %}

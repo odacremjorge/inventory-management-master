@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block title %} Delete Stock {% endblock title %}
+
+
+{% block content %}
+                
+    <form method="post">
+        
+        {% csrf_token %}
+        
+        <fieldset class="form-group">
+            <div style="color:#8199b9; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Eliminar del Stock</div> <br>
+            <h2>¿Estás seguro de que quieres eliminar el repuesto: "{{ object.name }}"?</h2>
+        </fieldset>
+
+        <div class="form-group">  
+            <button type="submit" class="btn ghost-red">Si, Eliminar</button>
+            <a href="{% url 'inventory' %}" class="btn ghost-button">Cancelar</a>
+        </div>
+        
+    </form>
+
+{% endblock content %}

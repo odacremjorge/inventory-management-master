@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block title %} Eliminar Proveedor {% endblock title %}
+
+
+{% block content %}
+                
+    <form method="post">
+        
+        {% csrf_token %}
+        
+        <fieldset class="form-group">
+            <div style="color:#78a5ca; font-style: bold; font-size: 3rem; border-bottom: 1px solid white;">Eliminar Proveedor</div> <br>
+            <h2>¿Esta seguro que desea eliminar al proveedor "{{ object.name }}"?</h2>
+        </fieldset>
+
+        <div class="form-group">  
+            <button type="submit" class="btn ghost-red">Si, Eliminar</button>
+            <a href="{% url 'suppliers-list' %}" class="btn ghost-button">Cancelar</a>
+        </div>
+        
+    </form>
+
+{% endblock content %}

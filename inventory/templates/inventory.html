@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+
+{% block title %} Inventory List {% endblock title %}
+
+
+{% block content %}
+    
+    <div class="row" style="color: #8199b9; font-style: bold; font-size: 3rem; ">
+        <div class="col-md-8">Repuestos en Stock</div>
+        <div class="col-md-4">               
+            <div style="float:right;"> <a class="btn ghost-blue" href="{% url 'new-stock' %}">Agregar Nuevo Repuesto</a> </div>
+        </div>
+    </div>
+    
+    <div style="border-bottom: 1px solid white;"></div>
+    
+    <br>
+
+    <table class="table table-css">
+
+        <form method="get">
+            <div class="input-group search">
+                {% render_field filter.form.name class="form-control textinput" placeholder="Buscar el repuesto en lista de Stock" %}
+                <div class="input-group-append">
+                   <button type="submit" class="btn btn-pink"> Buscar </button>
+                </div>
+            </div>
+        </form>
+
+        <br>
+        
+        <thead class="thead-inverse align-middle">
+            <tr>
+                <th width="50%">Repuesto</th>
+                <th width="20%">Stock actual en inventario</th>
+                <th width="30%">Opciones</th>
+            </tr>
+        </thead>
+                  
+{% if object_list %}
+
+        <tbody>         
+            {% for stock in object_list %}
+                <tr>
+                    <td>
+                        <h4>{{ stock.name }}</h4>
+                    </td>
+                    <td class="align-middle">{{ stock.quantity }}</td>
+                    <td class="align-middle">
+                        <a href="{% url 'edit-stock' stock.pk %}" class="btn ghost-button">Editar Detalles</a>
+                        <a href="{% url 'delete-stock' stock.pk %}" class="btn ghost-red"> Eliminar Stock </a>
+                    </td>          
+                </tr>
+            {% endfor %}                   
+        </tbody>
+
+    </table>  
+
+    <div class="align-middle">
+        {% if is_paginated %}
+
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">Primero</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Ultimo</a>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+{% else %}
+
+        <tbody></tbody>   
+    </table>
+
+    <br><br><br><br><br><br><br><br>
+    <div style="color: #778eb8; font-style: bold; font-size: 1.5rem; text-align: center;">WOW, ESTA VACIO</div>
+
+{% endif %}
+
+{% endblock content %}
+
+
+
+
+
+

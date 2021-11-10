@@ -1,0 +1,145 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/bootstrap.min.css' %}">
+
+    <!-- Main CSS, then Sidebar CSS and Dialog Box CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dialogbox.css' %}">    
+
+    <title>Almacen - {% block title %}Title Missing{% endblock title %}</title>
+
+</head>
+
+<body>
+
+    <!-- Dialog Box CSS  -->
+    <div id="dialogoverlay"></div>
+    <div id="dialogbox">
+        <div class="align-middle">
+            <div id="dialogboxhead"></div>
+            <div id="dialogboxbody"></div>
+            <div id="dialogboxfoot"></div>
+        </div>
+    </div>
+
+    <main id="wrapper">
+    
+    {% if user.is_authenticated %}
+    
+        <nav id="sidebar">
+            
+            <div class="sidebar-header">
+                <a class="navbar-brand titlefont mr-4" href="{% url 'home' %}"><h4>Almacen Oruro</h4></a>
+            </div>
+
+            <ul class="list-unstyled sidebar-components">
+                {# <p class="sidebar-paragraph">Encabezado</p> #}
+                <li>
+                    <a class="sidebar-text sidebar-button" href="{% url 'home' %}">Inicio</a>
+                </li>               
+                <li>
+                    <a href="#inventorySubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Inventario</a>
+                    <ul class="collapse list-unstyled" id="inventorySubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'inventory' %}">Lista de Inventario</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-stock' %}">Ingresar Nuevo Repuesto</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Entradas</a>
+                    <ul class="collapse list-unstyled" id="purchaseSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'purchases-list' %}">Lista de Entradas</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'select-supplier' %}">Ingresar Nueva Entrada</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#saleSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Salidas</a>
+                    <ul class="collapse list-unstyled" id="saleSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'sales-list' %}">Lista de Salidas</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-sale' %}">Ingresar Nueva Salida</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#supplierSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">Proveedores</a>
+                    <ul class="collapse list-unstyled" id="supplierSubmenu">
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'suppliers-list' %}">Lista de Proveedores</a> </li>
+                        <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'new-supplier' %}">Ingresar Nuevo Proveedor</a> </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="sidebar-text sidebar-button" href="{% url 'about' %}">Acerca de Nosotros</a>
+                </li>
+
+                <li class="bottomleft">
+                    <a href="#UserSubmenu" data-toggle="collapse" class="dropdown-toggle sidebar-text right-arrow sidebar-button">{{ request.user.username }}</a>
+                    <ul class="collapse list-unstyled" id="UserSubmenu">
+                        {% if request.user.is_superuser %}
+                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'admin:index' %}">Ir a pagina de Administrador</a> </li>
+                        {% endif %}
+                            <li> <a class="sidebar-text sidebar-subitem sidebar-button" href="{% url 'logout' %}">Cerrar Sesión</a> </li>
+                    </ul>
+                </li>
+
+            </ul>
+            {% comment %}
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="sidebar-button nav-button">Button</a>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-text">Link</a>
+                </li>
+            </ul>
+            {% endcomment %}
+
+        </nav>
+    
+        <div id="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}"> {{ message }} </div>
+                        {% endfor %}
+                    {% endif %}
+                
+    {% endif %} 
+
+                    <div class="container">
+                        {% block content %}{% endblock content %}
+                    </div>
+                    
+                </div>
+            </div>
+            <br>
+
+        </div>
+    
+    </main>    
+        
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'bootstrap/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>
